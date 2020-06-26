@@ -1,18 +1,27 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    {{json}}
+    <button @click.prevent="getProducts">Retrieve Information</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { api } from "@/services.js";
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  name: "Home",
+  components: {},
+  data() {
+    return {
+      json: ""
+    };
+  },
+  methods: {
+    getProducts() {
+      api.get("products").then(response => {
+        console.log(response);
+      });
+    }
   }
-}
+};
 </script>
