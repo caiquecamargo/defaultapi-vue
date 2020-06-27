@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @include font;
+}
+
+a {
+  display: block;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

@@ -1,0 +1,14 @@
+@mixin button{
+  display: block;
+  padding: 10px 30px;
+  background: $second_color;
+  border-radius: 4px;
+  @include font;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  @include shadow_default;
+  border: none;
+  cursor: pointer;
+  @include hover_button($hover_color);
+}

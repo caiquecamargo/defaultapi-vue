@@ -1,0 +1,46 @@
+@mixin hover_button($color: $second_color){
+  transition: all .2s;
+  &:hover{
+    background: $color;
+    color: #fff;
+    transform: scale(1.1);
+    transition: all .2s;
+  }
+}
+
+@mixin hover_item(){
+  transition: all .2s;
+  &:hover{
+    transition: all .2s;
+    @include shadow_grown;
+    transform: scale(1.1);
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@mixin searchbox_animation{
+  &:focus,
+  &:hover{
+    transform: scale(1.1);
+  }
+}
+
+@mixin input_animation{
+  transition: all .3s;
+  &:focus,
+  &:hover{
+    transition: all .3s;
+    outline: none;
+    @include shadow_grown;
+  }
+}
+
+@mixin link_hover{
+  transition: all .3s;
+  &:hover{
+    transition: all .3s;
+    color: $second_color;
+    text-decoration: underline;
+  }
+}

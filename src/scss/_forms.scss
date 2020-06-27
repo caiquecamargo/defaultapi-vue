@@ -1,0 +1,14 @@
+input, textarea {
+  @include shadow_default;
+  padding: 15px;
+  border: 1px solid white;
+  border-radius: 4px;
+  font-size: 1rem;
+  @include font;
+  @include input_animation;
+}
+
+label {
+  margin-bottom: 5px;
+}
+

@@ -1,31 +1,40 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-    </div>
-    <router-view />
+    <Header />
+    <main>
+      <transition mode="out-in">
+        <router-view />
+      </transition>
+    </main>
+    <Footer />
   </div>
 </template>
 
+<script>
+import Header from "@/components/header/Header.vue";
+import Footer from "@/components/footer/Footer.vue";
+
+export default {
+  name: "APP",
+  components: {
+    Header,
+    Footer
+  }
+};
+</script>
+
 <style lang="scss">
+@import "scss/normalize.scss";
+@import "scss/reset.scss";
+@import "scss/settings.scss";
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  main {
+    flex: 1;
   }
 }
 </style>

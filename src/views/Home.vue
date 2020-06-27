@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    {{json}}
+    <ul>
+      <li v-for="(item, index) in items" :key="index">{{item.name}}</li>
+    </ul>
     <button @click.prevent="getProducts">Retrieve Information</button>
   </div>
 </template>
@@ -13,15 +15,24 @@ export default {
   components: {},
   data() {
     return {
-      json: ""
+      items: []
     };
   },
   methods: {
     getProducts() {
       api.get("products").then(response => {
-        console.log(response);
+        this.items = response.data;
       });
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.home {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 45px auto;
+}
+</style>
