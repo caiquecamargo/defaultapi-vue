@@ -1,6 +1,8 @@
 <template>
-  <div class="main_header">
-    <img src="../../assets/logo.png" alt="logo" class="logo" />
+  <div @seeked="scrolling" class="main_header">
+    <router-link :to="{ name: 'Home' }" class="logo">
+      <img src="../../assets/logo.png" alt="logo" />
+    </router-link>
     <form action class="search">
       <input type="text" name="search" id="search" class="search__input" :placeholder="search" />
       <input
@@ -11,16 +13,38 @@
         class="search__button"
       />
     </form>
+    <router-link :to="{ name: 'Login' }" class="login">Entre ou cadastre-se</router-link>
+    <router-link to="/" class="cart">Carrinho</router-link>
   </div>
 </template>
 
 <script>
+import { debounce } from "debounce";
+
 export default {
   name: "MainHeader",
   data() {
     return {
       search: "Buscar..."
     };
+  },
+  methods: {
+    scrolling() {
+      const element = this.$el;
+      const distanceToTop = 25;
+      const scrollPosition = window.scrollY;
+
+      if (distanceToTop < scrollPosition)
+        element.classList.add("position-absolute");
+      else element.classList.remove("position-absolute");
+    }
+  },
+  created() {
+    this.handlerDebounceScroll = debounce(this.scrolling, 0);
+    window.addEventListener("scroll", this.handlerDebounceScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handlerDebounceScroll);
   }
 };
 </script>
@@ -31,6 +55,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: calc(100vw - 15px);
+  background: inherit;
+  padding-left: 15px;
+  padding-right: 15px;
+  z-index: 1;
 
   .logo {
     width: 50px;
@@ -57,5 +89,21 @@ export default {
       cursor: pointer;
     }
   }
+
+  .login,
+  .cart {
+    color: #fff;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+
+  .cart {
+    // background: url("../../assets/buy.svg") no-repeat center center;
+  }
+}
+
+.main_header.position-absolute {
+  position: fixed;
+  top: 0;
 }
 </style>

@@ -31,10 +31,28 @@ export default {
 #app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 110vh;
 
   main {
     flex: 1;
   }
+}
+
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+
+.v-enter {
+  transform: translate3d(0, -20px, 0);
+}
+
+.v-leave-to {
+  transform: translate3d(0, 20px, 0);
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.3s;
 }
 </style>

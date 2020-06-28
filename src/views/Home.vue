@@ -33,6 +33,6 @@ export default {
   display: flex;
   flex-direction: column;
   max-width: 800px;
-  margin: 45px auto;
+  margin: 50px auto;
 }
 </style>

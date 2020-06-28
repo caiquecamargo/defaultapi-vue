@@ -58,6 +58,15 @@ export default {
 
 <style lang="scss" scoped>
 .menu {
+  position: absolute;
+  left: 0;
+  width: calc(100vw - 15px);
+  top: 25px;
+  padding-top: 75px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: inherit;
+
   &__container {
     display: flex;
     justify-content: space-around;

@@ -1,4 +1,5 @@
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
+import axios from "axios";
 
 const woocommerce = new WooCommerceRestApi({
   url: "http://defaultapi.local",
@@ -11,4 +12,8 @@ export const api = {
   get(endpoint, params = {}) {
     return woocommerce.get(endpoint, params);
   }
+}
+
+export function getCep(cep) {
+  return axios.get(`https://viacep.com.br/ws/${cep}/json`);
 }
