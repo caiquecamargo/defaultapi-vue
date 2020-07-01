@@ -1,5 +1,5 @@
 <template>
-  <div>Filters</div>
+  <section class="filters">Filters</section>
 </template>
 
 <script>
@@ -9,4 +9,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.filters {
+  background: chocolate;
+  grid-row: span 5;
+}
 </style>

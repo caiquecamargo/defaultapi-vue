@@ -22,3 +22,17 @@ export function mapFields(options) {
   }
   return object;
 }
+
+export function compareTwoArrays(arrayOne, arrayTwo) {
+  if (arrayOne.length != arrayTwo.length) return 0;
+  let flag = 1;
+  arrayOne.forEach(element => {
+    if (arrayTwo.indexOf(element) < 0) flag = 0;
+  });
+
+  return flag;
+}
+
+export function removeHTMLElements(text) {
+  return text.replace(/(<[\w|/]+>)+/g, '');
+}

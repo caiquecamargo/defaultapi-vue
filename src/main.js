@@ -5,6 +5,16 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+Vue.filter("numberToValor", valor => {
+  valor = Number(valor);
+  if (!isNaN(valor)) {
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    })
+  }
+})
+
 new Vue({
   router,
   store,

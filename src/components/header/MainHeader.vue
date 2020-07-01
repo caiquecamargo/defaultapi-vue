@@ -62,7 +62,7 @@ export default {
   background: inherit;
   padding-left: 15px;
   padding-right: 15px;
-  z-index: 1;
+  z-index: 2;
 
   .logo {
     width: 50px;
@@ -105,5 +105,6 @@ export default {
 .main_header.position-absolute {
   position: fixed;
   top: 0;
+  @include shadow_default;
 }
 </style>
