@@ -2,7 +2,10 @@
   <nav class="menu">
     <ul v-if="menu" class="menu__container">
       <li v-for="[ category, value ] in Object.entries(menu)" :key="category" class="menu__item">
-        <router-link to="/" class="menu__item__link">{{category}}</router-link>
+        <router-link
+          :to="{ name: 'Products', params: {category: category.toLowerCase()}}"
+          class="menu__item__link"
+        >{{category}}</router-link>
         <ul class="menu__second_level">
           <li v-for="(item, index) in value" :key="index">
             <router-link to="/" class="menu__second_level__link">{{item.name}}</router-link>
@@ -60,7 +63,7 @@ export default {
 .menu {
   position: absolute;
   left: 0;
-  width: calc(100vw - 15px);
+  width: 100%;
   top: 25px;
   padding-top: 75px;
   padding-left: 15px;

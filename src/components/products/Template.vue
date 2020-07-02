@@ -37,8 +37,7 @@ export default {
       this.variations.forEach(element => {
         array.push(element.price);
       });
-      array.map(Number);
-      return array.reduce(this.reducer);
+      return array.map(Number).reduce(this.reducer);
     },
     getTextDescriptionFromHtmlElement() {
       if (this.product.short_description) {
@@ -51,9 +50,6 @@ export default {
   },
   created() {
     if (this.product.variations.length) this.getProductVariations();
-    fetch("http://defaultapi.local/wp-json/wp/v2/product")
-      .then(response => response.headers)
-      .then(r => r.forEach(a => console.log(a)));
   }
 };
 </script>

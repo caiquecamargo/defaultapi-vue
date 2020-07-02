@@ -58,7 +58,7 @@ export default {
   position: absolute;
   top: 25px;
   left: 0;
-  width: calc(100vw - 15px);
+  width: 100%;
   background: inherit;
   padding-left: 15px;
   padding-right: 15px;

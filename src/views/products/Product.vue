@@ -43,6 +43,7 @@ export default {
   max-width: $main_max_width;
   align-items: center;
   margin: 0 auto;
+  margin-top: 50px;
   padding: 15px;
 }
 </style>

@@ -14,11 +14,11 @@ import { api } from "@/services.js";
 
 export default {
   name: "Products",
+  props: ["category"],
   components: {
     Filters,
     Template
   },
-  props: ["category"],
   data() {
     return {
       products: []
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     getProducts() {
-      return api.get("products", { per_page: 10 }).then(response => {
+      return api.get("products", { per_page: 12 }).then(response => {
         this.products = response.data;
       });
     }

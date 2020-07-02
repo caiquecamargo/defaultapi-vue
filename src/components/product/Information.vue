@@ -16,7 +16,8 @@
       </div>
     </div>
     <div class="description">{{description}}</div>
-    <input type="submit" class="btn" value="Adicionar ao carrinho" />
+    <input v-if="selectedVariation" type="submit" class="btn" value="Adicionar ao carrinho" />
+    <input v-else type="submit" class="btn disabled" value="Indisponível no momento" />
   </div>
 </template>
 
@@ -70,6 +71,8 @@ export default {
         this.description = removeHTMLElements(
           this.selectedVariation.description
         );
+      } else {
+        this.description = "Indisponível no momento";
       }
     }
   },
@@ -165,5 +168,13 @@ export default {
   @include button;
   margin: 0 auto;
   margin-top: 30px;
+
+  &.disabled {
+    background: #4545;
+    cursor: default;
+    &:hover {
+      transform: scale(1);
+    }
+  }
 }
 </style>
