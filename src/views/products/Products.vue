@@ -57,13 +57,14 @@ export default {
 .products {
   display: grid;
   grid-template-columns: 300px 1fr;
-  gap: 15px;
+  gap: 30px;
   padding: 15px;
   max-width: $main_max_width;
   margin: 100px auto;
 
   .transition_container {
     display: grid;
+    gap: 30px;
     grid-template-columns: repeat(4, minmax(200px, 1fr));
   }
 }

@@ -4,13 +4,19 @@
       <img src="../../assets/logo.png" alt="logo" />
     </router-link>
     <form action class="search">
-      <input type="text" name="search" id="search" class="search__input" :placeholder="search" />
+      <input
+        type="text"
+        name="search"
+        id="search"
+        class="search__input input"
+        :placeholder="search"
+      />
       <input
         type="submit"
         name="search__button"
         id="search__button"
         value="search"
-        class="search__button"
+        class="search__button input"
       />
     </form>
     <router-link :to="{ name: 'Login' }" class="login">Entre ou cadastre-se</router-link>
@@ -70,11 +76,15 @@ export default {
   }
 
   .search {
-    display: flex;
-    align-items: center;
     flex: 1;
     margin-left: 15px;
     position: relative;
+    transition: 0.3s ease;
+
+    &:focus-within {
+      transition: 0.3s ease;
+      transform: scale(1.03);
+    }
 
     &__input {
       width: 100%;
@@ -84,6 +94,7 @@ export default {
       background: url("../../assets/search.svg") no-repeat center center;
       position: absolute;
       right: 0;
+      top: 0;
       text-indent: -150px;
       width: 50px;
       cursor: pointer;

@@ -57,19 +57,19 @@ export default {
 <style lang="scss" scoped>
 .product-template {
   height: 450px;
-  margin-right: 15px;
-  margin-bottom: 15px;
   padding: 5px;
   overflow: hidden;
   @include shadow_default;
   @include hover_item;
 
   .img {
-    height: 70%;
+    height: 60%;
   }
 
   .informations {
-    height: 30%;
+    height: 40%;
+    padding: 10px;
+    overflow: hidden;
 
     .price {
       font-style: italic;

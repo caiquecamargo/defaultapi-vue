@@ -24,6 +24,10 @@
     top: -10px;
   }
 
+  &__input[type="email"]{
+    background: royalblue;
+  }
+
   &__input, 
   &__textarea {
     background: transparent;
@@ -37,39 +41,17 @@
   }
 }
 
-.search {
-  &__input {
-    @include shadow_default;
-    padding: 15px;
-    border: 1px solid white;
-    border-radius: 4px;
-    font-size: 1rem;
-    @include font;
-    margin-bottom: 15px;
-    @include input_animation;
 
-    &:focus {
-      border: 1px solid red;
-    }
-  }
-
-  &__button {
-    position: relative;
-    top: 0;
-  }
-}
-
-input, textarea {
+.input, .textarea {
   @include shadow_default;
   padding: 15px;
   border: 1px solid white;
   border-radius: 4px;
   font-size: 1rem;
   @include font;
-  margin-bottom: 15px;
   @include input_animation;
 }
 
-label {
+.label {
   margin-bottom: 5px;
 }
