@@ -1,3 +1,64 @@
+.field {
+  position: relative;
+  margin-bottom: 55px;
+  width: 100%;
+
+  &__input,
+  &__textarea,
+  &__label {
+    position: absolute;
+    border-radius: 4px;
+  }
+
+  &__label {
+    top: 10px;
+    left: 10px;
+    color: $primary_color;
+    background: white;
+    z-index: 1;
+    padding: 2px;
+    transition: .3s ease;
+  }
+
+  &:focus-within &__label{
+    top: -10px;
+  }
+
+  &__input, 
+  &__textarea {
+    background: transparent;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid $primary_color;
+    font-size: 1rem;
+    color: $second_color;
+    @include font;
+    @include input_animation;
+  }
+}
+
+.search {
+  &__input {
+    @include shadow_default;
+    padding: 15px;
+    border: 1px solid white;
+    border-radius: 4px;
+    font-size: 1rem;
+    @include font;
+    margin-bottom: 15px;
+    @include input_animation;
+
+    &:focus {
+      border: 1px solid red;
+    }
+  }
+
+  &__button {
+    position: relative;
+    top: 0;
+  }
+}
+
 input, textarea {
   @include shadow_default;
   padding: 15px;
@@ -5,10 +66,10 @@ input, textarea {
   border-radius: 4px;
   font-size: 1rem;
   @include font;
+  margin-bottom: 15px;
   @include input_animation;
 }
 
 label {
   margin-bottom: 5px;
 }
-

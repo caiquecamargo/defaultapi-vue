@@ -1,7 +1,10 @@
 <template>
   <section class="product">
-    <Images :images="images" />
-    <Information :product="product" />
+    <div v-show="show" class="product__container">
+      <Images :images="images" />
+      <Information :product="product" />
+    </div>
+    <Loading v-show="!show" />
   </section>
 </template>
 
@@ -9,26 +12,36 @@
 import { api } from "@/services.js";
 import Information from "@/components/product/Information.vue";
 import Images from "@/components/product/Images.vue";
+import Loading from "@/components/loading/Loading.vue";
 
 export default {
   name: "Product",
   props: ["id"],
   components: {
     Information,
-    Images
+    Images,
+    Loading
   },
   data() {
     return {
       product: {},
-      images: []
+      images: [],
+      show: false
     };
   },
   methods: {
     getProduct() {
+      this.show = false;
       return api.get(`products/${this.id}`).then(response => {
+        this.show = true;
         this.product = response.data;
         this.images = this.product.images;
       });
+    }
+  },
+  watch: {
+    id() {
+      this.getProduct();
     }
   },
   created() {
@@ -40,10 +53,14 @@ export default {
 <style lang="scss" scoped>
 .product {
   display: flex;
-  max-width: $main_max_width;
-  align-items: center;
-  margin: 0 auto;
-  margin-top: 50px;
-  padding: 15px;
+  justify-content: center;
+  min-height: 100vh;
+
+  &__container {
+    display: flex;
+    max-width: $main_max_width;
+    margin-top: 50px;
+    padding: 15px;
+  }
 }
 </style>

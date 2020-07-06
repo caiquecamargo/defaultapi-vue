@@ -34,7 +34,7 @@ export function compareTwoArrays(arrayOne, arrayTwo) {
 }
 
 export function removeHTMLElements(text) {
-  return text.replace(/(<[\w|/]+>)+/g, '');
+  if (text) return text.replace(/(<[\w|/]+>)+/g, '');
 }
 
 export class Gallery {

@@ -2,7 +2,7 @@
   <div class="informations">
     <h1 class="name">{{product.name}}</h1>
     <p class="price">{{price | numberToValor}}</p>
-    <div v-if="attributes.length" class="select">
+    <div v-if="attributes" class="select">
       <div class="select__container" v-for="{ id, name, options } in attributes" :key="id">
         <label class="select__label" :for="id">{{name | formatLabelName}}:</label>
         <select @change="changeAttribute" class="select__hook" :ref="id" :name="name" :id="id">
@@ -83,10 +83,12 @@ export default {
   },
   watch: {
     product() {
-      this.price = Number(this.product.price);
-      this.description = removeHTMLElements(this.product.description);
-      this.attributes = this.product.attributes;
-      if (this.product.variations.length) this.getProductVariations();
+      if (Object.keys(this.product).length) {
+        this.price = Number(this.product.price);
+        this.description = removeHTMLElements(this.product.description);
+        this.attributes = this.product.attributes;
+        if (this.product.variations.length) this.getProductVariations();
+      }
     }
   }
 };
