@@ -1,0 +1,32 @@
+<template>
+  <section class="cart">
+    <router-link to="/" class="cart__link">Carrinho</router-link>
+    <CartWrapper class="cart__wrapper" />
+  </section>
+</template>
+
+<script>
+import CartWrapper from "@/components/cart/CartWrapper";
+
+export default {
+  name: "CartLink",
+  components: {
+    CartWrapper
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.cart {
+  position: relative;
+
+  &:hover &__wrapper {
+    opacity: 1;
+  }
+
+  &__link {
+    @include font;
+    color: white;
+  }
+}
+</style>

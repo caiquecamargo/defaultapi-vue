@@ -20,15 +20,19 @@
       />
     </form>
     <router-link :to="{ name: 'Login' }" class="login">Entre ou cadastre-se</router-link>
-    <router-link to="/" class="cart">Carrinho</router-link>
+    <CartLink />
   </div>
 </template>
 
 <script>
+import CartLink from "@/components/cart/CartLink.vue";
 import { debounce } from "debounce";
 
 export default {
   name: "MainHeader",
+  components: {
+    CartLink
+  },
   data() {
     return {
       search: "Buscar..."

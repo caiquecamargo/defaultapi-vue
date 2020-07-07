@@ -29,7 +29,6 @@ export default {
 
 <style lang="scss" scoped>
 .images {
-  flex: 1;
   display: grid;
   grid-template-columns: 75px 1fr;
   height: 450px;

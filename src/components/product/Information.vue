@@ -16,7 +16,13 @@
       </div>
     </div>
     <div class="description">{{description}}</div>
-    <input v-if="selectedVariation" type="submit" class="btn" value="Adicionar ao carrinho" />
+    <input
+      v-if="selectedVariation"
+      @click.prevent="addToCart"
+      type="submit"
+      class="btn"
+      value="Adicionar ao carrinho"
+    />
     <input v-else type="submit" class="btn disabled" value="Indisponível no momento" />
   </div>
 </template>
@@ -63,7 +69,10 @@ export default {
         });
         return compareTwoArrays(values, options);
       });
-      this.selectedVariation = selectedVariation[0];
+      this.selectedVariation = {
+        name: this.product.name,
+        ...selectedVariation[0]
+      };
     },
     attProductInformation() {
       if (this.selectedVariation) {
@@ -74,6 +83,12 @@ export default {
       } else {
         this.description = "Indisponível no momento";
       }
+    },
+    addToCart() {
+      const itemToAddInCart = this.selectedVariation
+        ? this.selectedVariation
+        : this.product;
+      this.$store.commit("UPDATE_CART", itemToAddInCart);
     }
   },
   filters: {
@@ -96,8 +111,6 @@ export default {
 
 <style lang="scss" scoped>
 .informations {
-  flex: 1;
-
   .name {
     @include font;
     font-weight: bold;

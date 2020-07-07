@@ -66,6 +66,10 @@ export default {
     display: grid;
     gap: 30px;
     grid-template-columns: repeat(4, minmax(200px, 1fr));
+
+    @include medium-window {
+      grid-template-columns: repeat(3, minmax(200px, 1fr));
+    }
   }
 }
 </style>

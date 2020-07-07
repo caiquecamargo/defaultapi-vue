@@ -2,11 +2,11 @@
   <section class="login">
     <h1 class="login__title">Login</h1>
     <form class="login__form">
-      <div class="field">
+      <div class="field" :class="{ filled: user.email.length }">
         <label class="field__label" for="email">Email</label>
         <input class="field__input" type="email" name="email" id="email" v-model="user.email" />
       </div>
-      <div class="field">
+      <div class="field" :class="{ filled: user.email.length }">
         <label class="field__label" for="password">Password</label>
         <input
           class="field__input"
@@ -18,8 +18,8 @@
       </div>
       <button class="btn" @click.prevent="login">Login</button>
     </form>
-    <p class="perdeu">
-      <a href="/" target="_black">Recuperar senha</a>
+    <p class="lost_password">
+      <a href="/" target="_blank">Recuperar senha</a>
     </p>
     <CreateUser />
   </section>
@@ -42,6 +42,7 @@ export default {
       erros: []
     };
   },
+  watch: {},
   methods: {}
 };
 </script>
@@ -58,6 +59,7 @@ export default {
     margin-bottom: 30px;
     @include font;
     font-size: 2rem;
+    font-weight: bold;
     color: $primary_color;
   }
 
@@ -71,6 +73,14 @@ export default {
       @include button;
       width: 300px;
       justify-self: center;
+    }
+  }
+
+  .lost_password {
+    a {
+      color: $primary_color;
+      text-align: right;
+      @include link_hover;
     }
   }
 }

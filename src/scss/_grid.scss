@@ -1,1 +1,19 @@
 $main_max_width: 1500px;
+
+@mixin cell-phone{
+  @media (max-width: 768px){
+      @content;
+  }
+}
+
+@mixin medium-window{
+  @media (max-width: 1500px){
+      @content;
+  }
+}
+
+@mixin tiny-window{
+  @media (max-width: 1280px){
+      @content;
+  }
+}

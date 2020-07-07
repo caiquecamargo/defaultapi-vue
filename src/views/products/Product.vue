@@ -54,11 +54,11 @@ export default {
 .product {
   display: flex;
   justify-content: center;
+  max-width: $main_max_width;
   min-height: 100vh;
 
   &__container {
     display: flex;
-    max-width: $main_max_width;
     margin-top: 50px;
     padding: 15px;
   }
