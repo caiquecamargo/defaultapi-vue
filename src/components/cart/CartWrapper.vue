@@ -4,9 +4,10 @@
       <h2 class="title">Itens no carrinho</h2>
     </header>
     <ul v-if="cart.length" class="container">
-      <li class="item" v-for="( item, index ) in cart" :key="index">
+      <li class="item" v-for="{ id, item, qtyInCart } in cart" :key="id">
         <p class="item__name">{{item.name}}</p>
-        <div class="remove_item">remover</div>
+        <p class="item__name">{{qtyInCart}}</p>
+        <button class="remove_item" @click.prevent="removeItemFromCart" :value="id">remover</button>
       </li>
     </ul>
     <div class="not_in_cart" v-else>
@@ -20,8 +21,13 @@ export default {
   name: "CartWrapper",
   computed: {
     cart() {
-      console.log(this.$store.state.cart);
       return this.$store.state.cart;
+    }
+  },
+  methods: {
+    removeItemFromCart(event) {
+      const itemId = Number(event.target.value);
+      this.$store.commit("REMOVE_ITEM_FROM_CART", itemId);
     }
   }
 };
@@ -29,11 +35,13 @@ export default {
 
 <style lang="scss" scoped>
 .cart_wrapper {
-  opacity: 0;
+  transition: 0.2s ease;
+  max-height: 0;
+  overflow: hidden;
   position: absolute;
   background: $primary_color;
   right: 0;
-  padding: 10px;
+  padding: 0 10px;
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -43,6 +51,7 @@ export default {
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
+    margin-top: 10px;
     margin-bottom: 10px;
 
     &::after {
@@ -55,6 +64,8 @@ export default {
   }
 
   .container {
+    margin-bottom: 10px;
+
     .item {
       display: flex;
       justify-content: space-between;

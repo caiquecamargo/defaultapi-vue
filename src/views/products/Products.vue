@@ -7,6 +7,7 @@
       </div>
       <Loading v-show="!show" key="loading" />
     </transition-group>
+    <Pagination :totalPages="totalPages" />
   </main>
 </template>
 
@@ -14,6 +15,7 @@
 import Filters from "@/components/products/Filters.vue";
 import Template from "@/components/products/Template.vue";
 import Loading from "@/components/loading/Loading.vue";
+import Pagination from "@/components/products/Pagination.vue";
 import { api } from "@/services.js";
 
 export default {
@@ -22,12 +24,14 @@ export default {
   components: {
     Filters,
     Template,
-    Loading
+    Loading,
+    Pagination
   },
   data() {
     return {
       products: [],
-      show: false
+      show: false,
+      totalPages: 0
     };
   },
   methods: {
@@ -35,8 +39,9 @@ export default {
       const category = this.category === "#" ? null : this.category;
       this.show = false;
       return api
-        .get("products", { per_page: 12, category: category })
+        .get("products", { per_page: 5, category: category })
         .then(response => {
+          this.totalPages = response.headers["x-wp-totalpages"];
           this.show = true;
           this.products = response.data;
         });

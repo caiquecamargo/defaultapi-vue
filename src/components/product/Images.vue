@@ -31,6 +31,7 @@ export default {
 .images {
   display: grid;
   grid-template-columns: 75px 1fr;
+  width: 50%;
   height: 450px;
 
   &__list {

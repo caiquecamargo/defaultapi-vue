@@ -19,7 +19,8 @@
         class="search__button input"
       />
     </form>
-    <router-link :to="{ name: 'Login' }" class="login">Entre ou cadastre-se</router-link>
+    <router-link :to="{ name: 'Login' }" class="login" v-if="!isLogged">Entre ou cadastre-se</router-link>
+    <router-link :to="{ name: 'User' }" class="login" v-else>{{$store.state.user.name}}</router-link>
     <CartLink />
   </div>
 </template>
@@ -47,6 +48,14 @@ export default {
       if (distanceToTop < scrollPosition)
         element.classList.add("position-absolute");
       else element.classList.remove("position-absolute");
+    }
+  },
+  computed: {
+    isLogged() {
+      return this.$store.state.logged;
+    },
+    userName() {
+      return this.$store.state.user.name;
     }
   },
   created() {

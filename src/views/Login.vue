@@ -19,7 +19,7 @@
       <button class="btn" @click.prevent="login">Login</button>
     </form>
     <p class="lost_password">
-      <a href="/" target="_blank">Recuperar senha</a>
+      <a href="/" target="_blank" @click.prevent="logout">Recuperar senha</a>
     </p>
     <CreateUser />
   </section>
@@ -43,7 +43,16 @@ export default {
     };
   },
   watch: {},
-  methods: {}
+  methods: {
+    async login() {
+      await this.$store.dispatch("login", this.user);
+      await this.$store.dispatch("getUser");
+      await this.$router.push({ name: "User" });
+    },
+    logout() {
+      this.$store.dispatch("logout");
+    }
+  }
 };
 </script>
 

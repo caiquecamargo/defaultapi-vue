@@ -37,28 +37,30 @@ export function removeHTMLElements(text) {
   if (text) return text.replace(/(<[\w|/]+>)+/g, '');
 }
 
-export class Gallery {
-  constructor() {
-    this.gallery = document.querySelector('[data-gallery="gallery"]');
-    this.galleryList = document.querySelectorAll('[data-gallery="list"]');
-    this.galleryMain = document.querySelector('[data-gallery="main"]');
-    this.changeImage = this.changeImage.bind(this);
-  }
+function hasOnCart(cart, id) {
+  return cart.findIndex(element => element.id === id)
+}
 
-  changeImage({ currentTarget }) {
-    this.galleryMain.src = currentTarget.src;
-  }
+export function addItemToCart(cart, item) {
+  const { id } = item;
+  const indexOfItemOnCart = hasOnCart(cart, id);
 
-  addChangeEvent() {
-    this.galleryList.forEach(img => {
-      img.addEventListener('click', this.changeImage);
-      img.addEventListener('mouseover', this.changeImage);
-    })
-  }
-
-  init() {
-    if (this.gallery) {
-      this.addChangeEvent();
+  if (indexOfItemOnCart >= 0) {
+    cart[indexOfItemOnCart].qtyInCart += 1;
+  } else {
+    const newItem = {
+      id: id,
+      qtyInCart: 1,
+      item: item
     }
+    cart.push(newItem);
   }
+
+  return cart;
+}
+
+export function removeItemFromCart(cart, id) {
+  const indexOfItemOnCart = hasOnCart(cart, id);
+  cart.splice(indexOfItemOnCart, 1);
+  return cart;
 }

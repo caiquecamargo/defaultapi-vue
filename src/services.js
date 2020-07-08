@@ -10,9 +10,34 @@ const woocommerce = new WooCommerceRestApi({
   version: "wc/v2"
 });
 
+const axiosInstance = axios.create();
+
+axiosInstance.interceptors.request.use(
+  function (config) {
+    const token = window.localStorage.token;
+    if (token) {
+      config.headers.Authorization = token;
+    }
+
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+)
+
 export const api = {
   get(endpoint, params = {}) {
     return woocommerce.get(endpoint, params);
+  },
+  login(body) {
+    return axiosInstance.post("http://defaultapi.local/wp-json/jwt-auth/v1/token", body);
+  },
+  axiosGet(endpoint) {
+    return axiosInstance.get(`http://defaultapi.local/wp-json/api/${endpoint}`);
+  },
+  validateToken() {
+    return axiosInstance.post("http://defaultapi.local/wp-json/jwt-auth/v1/token/validate");
   }
 }
 

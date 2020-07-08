@@ -1,26 +1,61 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { addItemToCart, removeItemFromCart } from "@/helpers.js";
+import { api } from '../services';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    cart: {}
+    strict: true,
+    cart: [],
+    logged: false,
+    user: {
+      id: "",
+      name: "",
+      email: "",
+      password: "",
+      postalcode: "",
+      address: "",
+      number: "",
+      neighborhood: "",
+      city: "",
+      state: ""
+    }
   },
   mutations: {
-    UPDATE_CART(state, payload) {
-      const { id } = payload;
-      if (!state.cart[id]) {
-        state.cart.id = {
-          qtyInCart: 1,
-          content: payload
-        }
-      } else {
-        state.cart[id].qtyInCart += 1;
-      }
+    ADD_ITEM_TO_CART(state, payload) {
+      state.cart = addItemToCart(state.cart, payload);
+    },
+    REMOVE_ITEM_FROM_CART(state, payload) {
+      state.cart = removeItemFromCart(state.cart, payload);
+    },
+    UPDATE_LOGIN(state, payload) {
+      state.logged = payload;
+    },
+    UPDATE_USER(state, payload) {
+      state.user = Object.assign({}, state.user, payload)
     }
   },
   actions: {
+    getUser(context) {
+      return api.axiosGet("usuario").then(response => {
+        context.commit("UPDATE_USER", response.data);
+        context.commit("UPDATE_LOGIN", true);
+      })
+    },
+    login(context, payload) {
+      return api.login({
+        username: payload.email,
+        password: payload.password
+      }).then(response => {
+        window.localStorage.token = `Bearer ${response.data.token}`;
+      })
+    },
+    logout(context) {
+      context.commit("UPDATE_LOGIN", false);
+      window.localStorage.removeItem("token");
+    }
   },
   modules: {
   }

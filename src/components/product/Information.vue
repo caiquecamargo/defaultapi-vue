@@ -17,7 +17,7 @@
     </div>
     <div class="description">{{description}}</div>
     <input
-      v-if="selectedVariation"
+      v-if="isAvailable"
       @click.prevent="addToCart"
       type="submit"
       class="btn"
@@ -40,7 +40,8 @@ export default {
       description: "",
       attributes: [],
       variations: [],
-      selectedVariation: null
+      selectedVariation: null,
+      isAvailable: true
     };
   },
   methods: {
@@ -52,6 +53,33 @@ export default {
           this.changeAttribute();
         });
     },
+    getProductVariation(values) {
+      const selectedVariation = this.variations.filter(variation => {
+        let options = [];
+        variation.attributes.forEach(attribute => {
+          options.push(attribute.option);
+        });
+        return compareTwoArrays(values, options);
+      });
+      this.selectedVariation = selectedVariation.length
+        ? {
+            name: this.product.name,
+            ...selectedVariation[0]
+          }
+        : null;
+    },
+    attProductInformation() {
+      if (this.selectedVariation) {
+        this.isAvailable = true;
+        this.price = Number(this.selectedVariation.price);
+        this.description = removeHTMLElements(
+          this.selectedVariation.description
+        );
+      } else {
+        this.isAvailable = false;
+        this.description = "Indisponível no momento";
+      }
+    },
     changeAttribute() {
       const refs = this.$refs;
       let values = [];
@@ -61,34 +89,11 @@ export default {
       this.getProductVariation(values);
       this.attProductInformation();
     },
-    getProductVariation(values) {
-      const selectedVariation = this.variations.filter(variation => {
-        let options = [];
-        variation.attributes.forEach(attribute => {
-          options.push(attribute.option);
-        });
-        return compareTwoArrays(values, options);
-      });
-      this.selectedVariation = {
-        name: this.product.name,
-        ...selectedVariation[0]
-      };
-    },
-    attProductInformation() {
-      if (this.selectedVariation) {
-        this.price = Number(this.selectedVariation.price);
-        this.description = removeHTMLElements(
-          this.selectedVariation.description
-        );
-      } else {
-        this.description = "Indisponível no momento";
-      }
-    },
     addToCart() {
       const itemToAddInCart = this.selectedVariation
         ? this.selectedVariation
         : this.product;
-      this.$store.commit("UPDATE_CART", itemToAddInCart);
+      this.$store.commit("ADD_ITEM_TO_CART", itemToAddInCart);
     }
   },
   filters: {
@@ -99,6 +104,8 @@ export default {
   watch: {
     product() {
       if (Object.keys(this.product).length) {
+        this.isAvailable = true;
+        this.selectedVariation = null;
         this.price = Number(this.product.price);
         this.description = removeHTMLElements(this.product.description);
         this.attributes = this.product.attributes;
@@ -111,6 +118,8 @@ export default {
 
 <style lang="scss" scoped>
 .informations {
+  width: 50%;
+
   .name {
     @include font;
     font-weight: bold;

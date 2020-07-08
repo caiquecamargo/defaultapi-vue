@@ -21,7 +21,8 @@ export default {
   position: relative;
 
   &:hover &__wrapper {
-    opacity: 1;
+    max-height: 100vh;
+    transition: 1s ease;
   }
 
   &__link {
