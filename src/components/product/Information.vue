@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import { api } from "@/services.js";
-import { compareTwoArrays, removeHTMLElements } from "@/helpers.js";
+import { api } from "@/modules/services.js";
+import { compareTwoArrays, removeHTMLElements } from "@/modules/helpers.js";
 
 export default {
   name: "Information",

@@ -9,6 +9,7 @@
         name="search"
         id="search"
         class="search__input input"
+        v-model="searchQuery"
         :placeholder="search"
       />
       <input
@@ -17,6 +18,7 @@
         id="search__button"
         value="search"
         class="search__button input"
+        @click.prevent="searchProduct"
       />
     </form>
     <router-link :to="{ name: 'Login' }" class="login" v-if="!isLogged">Entre ou cadastre-se</router-link>
@@ -36,10 +38,23 @@ export default {
   },
   data() {
     return {
-      search: "Buscar..."
+      search: "Buscar...",
+      searchQuery: ""
     };
   },
   methods: {
+    searchProduct() {
+      const query = {
+        ...this.$route.query,
+        search: this.searchQuery
+      };
+
+      this.$router.push({
+        name: "Products",
+        query: query,
+        params: { category: "#" }
+      });
+    },
     scrolling() {
       const element = this.$el;
       const distanceToTop = 25;

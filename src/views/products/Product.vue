@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { api } from "@/services.js";
+import { api } from "@/modules/services.js";
 import Information from "@/components/product/Information.vue";
 import Images from "@/components/product/Images.vue";
 import Loading from "@/components/loading/Loading.vue";

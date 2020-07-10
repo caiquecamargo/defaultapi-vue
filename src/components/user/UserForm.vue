@@ -64,8 +64,8 @@
 </template>
 
 <script>
-import { mapFields } from "@/helpers.js";
-// import { getCep } from "@/services.js";
+import { mapFields } from "@/modules/helpers.js";
+// import { getCep } from "@/modules/services.js";
 
 export default {
   name: "UserForm",

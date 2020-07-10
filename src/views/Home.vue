@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { api } from "@/services.js";
+import { api } from "@/modules/services.js";
 
 export default {
   name: "Home",

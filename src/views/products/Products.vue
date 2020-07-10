@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import Filters from "@/components/products/Filters.vue";
+import Filters from "@/components/products/filters/Filters.vue";
 import Template from "@/components/products/Template.vue";
 import Loading from "@/components/loading/Loading.vue";
 import Pagination from "@/components/products/Pagination.vue";
-import { api } from "@/services.js";
+import { api } from "@/modules/services.js";
 
 export default {
   name: "Products",
@@ -31,24 +31,37 @@ export default {
     return {
       products: [],
       show: false,
-      totalPages: 0
+      totalPages: 0,
+      per_page: 12
     };
   },
   methods: {
     getProducts() {
-      const category = this.category === "#" ? null : this.category;
       this.show = false;
-      return api
-        .get("products", { per_page: 5, category: category })
-        .then(response => {
-          this.totalPages = response.headers["x-wp-totalpages"];
-          this.show = true;
-          this.products = response.data;
-        });
+      if (!this.params.page) this.$route.query.page = 1;
+      return api.get("products", this.params).then(response => {
+        this.totalPages = response.headers["x-wp-totalpages"];
+        this.show = true;
+        this.products = response.data;
+      });
+    }
+  },
+  computed: {
+    params() {
+      const category = this.category === "#" ? null : this.category;
+
+      return {
+        ...this.$route.query,
+        per_page: this.per_page,
+        category: category
+      };
     }
   },
   watch: {
     category() {
+      this.getProducts();
+    },
+    params() {
       this.getProducts();
     }
   },

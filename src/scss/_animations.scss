@@ -36,11 +36,11 @@
   }
 }
 
-@mixin link_hover{
+@mixin link_hover($color: $second_color){
   transition: all .3s;
   &:hover{
     transition: all .3s;
-    color: $second_color;
+    color: $color;
     text-decoration: underline;
   }
 }

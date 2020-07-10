@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { addItemToCart, removeItemFromCart } from "@/helpers.js";
-import { api } from '../services';
+import { addItemToCart, removeItemFromCart } from "@/modules/helpers.js";
+import { api } from '@/modules/services';
 
 Vue.use(Vuex)
 

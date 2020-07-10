@@ -14,7 +14,7 @@
 
 <script>
 import MenuWrapper from "@/components/header/MenuWrapper.vue";
-import { api } from "@/services.js";
+import { api } from "@/modules/services.js";
 
 export default {
   name: "MenuHeader",
