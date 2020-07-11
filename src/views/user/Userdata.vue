@@ -3,7 +3,7 @@
     <header class="header">
       <h1 class="title">Dados do Usuário</h1>
     </header>
-    <UserForm>
+    <UserForm :data="true">
       <button class="btn">Atualizar dados</button>
     </UserForm>
   </section>

@@ -19,6 +19,9 @@ export default {
   components: {
     Header,
     Footer
+  },
+  created() {
+    if (window.localStorage.token) this.$store.dispatch("validateUser");
   }
 };
 </script>

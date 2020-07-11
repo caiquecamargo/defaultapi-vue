@@ -39,6 +39,7 @@ export default {
 .categories {
   padding: 15px;
   background: $second_color;
+  @include shadow_default;
 
   .header {
     .title {

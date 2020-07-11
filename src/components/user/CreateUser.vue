@@ -3,7 +3,7 @@
     <h2 class="title">Crie sua conta</h2>
     <transition-group mode="out-in">
       <button v-if="!criar" @click="criar = true" class="btn" key="button">Criar conta</button>
-      <UserForm v-else key="form">
+      <UserForm :data="true" :billing="true" v-else key="form">
         <button class="btn" @click.prevent="criarUsuario">Criar usuário</button>
       </UserForm>
     </transition-group>

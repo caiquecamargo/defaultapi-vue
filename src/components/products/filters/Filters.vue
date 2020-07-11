@@ -1,5 +1,8 @@
 <template>
   <section class="filters">
+    <header class="header">
+      <h2 class="title">Filtros</h2>
+    </header>
     <Categories />
   </section>
 </template>
@@ -18,5 +21,17 @@ export default {
 <style lang="scss" scoped>
 .filters {
   grid-row: 1/-1;
+
+  .header {
+    .title {
+      @include font;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 2rem;
+      font-weight: bold;
+      color: $second_color;
+      margin-bottom: 15px;
+    }
+  }
 }
 </style>

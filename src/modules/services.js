@@ -3,10 +3,10 @@ import axios from "axios";
 
 const woocommerce = new WooCommerceRestApi({
   url: "http://defaultapi.local",
-  consumerKey: "ck_3616fe9c096b2c7584254132eec4fc35c038358a", //NOTE
-  consumerSecret: "cs_59a93494528077930bfa44f4d190b4a75b2b24ca", //NOTE
-  // consumerKey: "ck_10353726e1796aa935558a39dda6bb6aa74b83f5", //PC
-  // consumerSecret: "cs_721b37f3d26087cb193d353321352110a848b43b", //PC
+  // consumerKey: "ck_3616fe9c096b2c7584254132eec4fc35c038358a", //NOTE
+  // consumerSecret: "cs_59a93494528077930bfa44f4d190b4a75b2b24ca", //NOTE
+  consumerKey: "ck_10353726e1796aa935558a39dda6bb6aa74b83f5", //PC
+  consumerSecret: "cs_721b37f3d26087cb193d353321352110a848b43b", //PC
   version: "wc/v2"
 });
 

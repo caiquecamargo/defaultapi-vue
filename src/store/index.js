@@ -20,7 +20,23 @@ export default new Vuex.Store({
       number: "",
       neighborhood: "",
       city: "",
-      state: ""
+      state: "",
+      billing: {
+        postalcode: "",
+        address: "",
+        number: "",
+        neighborhood: "",
+        city: "",
+        state: "",
+      },
+      shipping: {
+        postalcode: "",
+        address: "",
+        number: "",
+        neighborhood: "",
+        city: "",
+        state: "",
+      },
     }
   },
   mutations: {
@@ -43,6 +59,14 @@ export default new Vuex.Store({
         context.commit("UPDATE_USER", response.data);
         context.commit("UPDATE_LOGIN", true);
       })
+    },
+    validateUser(context) {
+      api.validateToken()
+        .then(() => {
+          context.dispatch("getUser");
+        }).catch(() => {
+          window.localStorage.removeItem("token");
+        })
     },
     login(context, payload) {
       return api.login({

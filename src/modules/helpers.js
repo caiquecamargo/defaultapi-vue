@@ -11,14 +11,27 @@ export function mapFields(options) {
   const object = {};
   for (let x = 0; x < options.fields.length; x++) {
     const field = [options.fields[x]];
-    object[field] = {
+    object[field] = (options.base.length > 1) ? {
       get() {
-        return this.$store.state[options.base][field];
+        const firstBase = options.base[0];
+        const secondBase = options.base[1];
+        return this.$store.state[firstBase][secondBase][field];
       },
       set(value) {
-        this.$store.commit(options.mutation, { [field]: value });
+        const secondBase = options.base[1];
+        this.$store.commit(options.mutation, { [secondBase]: { [field]: value } });
       }
-    };
+    }
+      :
+      {
+        get() {
+          const firstBase = options.base[0];
+          return this.$store.state[firstBase][field];
+        },
+        set(value) {
+          this.$store.commit(options.mutation, { [field]: value });
+        }
+      }
   }
   return object;
 }
