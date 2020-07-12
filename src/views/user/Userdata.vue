@@ -4,19 +4,21 @@
       <h1 class="title">Dados do Usuário</h1>
     </header>
     <UserForm :data="true">
-      <button class="btn">Atualizar dados</button>
+      <button @click.prevent="attUserData" class="btn">Atualizar dados</button>
     </UserForm>
   </section>
 </template>
 
 <script>
 import UserForm from "@/components/user/UserForm";
+// import { api } from "@/modules/services.js";
 
 export default {
   name: "Userdata",
   components: {
     UserForm
-  }
+  },
+  methods: {}
 };
 </script>
 

@@ -27,7 +27,7 @@ export default {
   methods: {
     removeItemFromCart(event) {
       const itemId = Number(event.target.value);
-      this.$store.commit("REMOVE_ITEM_FROM_CART", itemId);
+      this.$store.dispatch("removeItemFromCart", itemId);
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <section class="cart">
-    <router-link to="/" class="cart__link">Carrinho</router-link>
+    <router-link :to="{ name: 'Cart' }" class="cart__link">Carrinho</router-link>
     <CartWrapper class="cart__wrapper" />
   </section>
 </template>

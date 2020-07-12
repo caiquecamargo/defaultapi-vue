@@ -19,7 +19,7 @@
       <button class="btn" @click.prevent="login">Login</button>
     </form>
     <p class="lost_password">
-      <a href="/" target="_blank" @click.prevent="logout">Recuperar senha</a>
+      <a href="/" target="_blank" @click.prevent="lostpassword">Recuperar senha</a>
     </p>
     <CreateUser />
   </section>

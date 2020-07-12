@@ -93,7 +93,7 @@ export default {
       const itemToAddInCart = this.selectedVariation
         ? this.selectedVariation
         : this.product;
-      this.$store.commit("ADD_ITEM_TO_CART", itemToAddInCart);
+      this.$store.dispatch("addItemToCart", itemToAddInCart);
     }
   },
   filters: {

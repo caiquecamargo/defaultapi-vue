@@ -12,7 +12,7 @@
           <router-link :to="{ name: 'UserOrders' }">Pedidos</router-link>
         </li>
         <li class="item">
-          <router-link to="/">Sair</router-link>
+          <a class="logout" @click.prevent="logout">Sair</a>
         </li>
       </ul>
     </nav>
@@ -24,7 +24,13 @@
 
 <script>
 export default {
-  name: "User"
+  name: "User",
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push({ name: "Home" });
+    }
+  }
 };
 </script>
 
@@ -61,6 +67,10 @@ export default {
       &:hover {
         transform: scale(1);
       }
+    }
+
+    .logout {
+      color: red;
     }
   }
 }

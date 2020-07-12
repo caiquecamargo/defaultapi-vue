@@ -21,7 +21,8 @@ export default {
     Footer
   },
   created() {
-    if (window.localStorage.token) this.$store.dispatch("validateUser");
+    this.$store.dispatch("validateUser");
+    this.$store.dispatch("verifyExistingCart");
   }
 };
 </script>

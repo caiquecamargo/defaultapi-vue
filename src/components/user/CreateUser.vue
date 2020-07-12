@@ -2,9 +2,9 @@
   <section class="create_account">
     <h2 class="title">Crie sua conta</h2>
     <transition-group mode="out-in">
-      <button v-if="!criar" @click="criar = true" class="btn" key="button">Criar conta</button>
+      <button v-if="!create" @click="create = true" class="btn" key="button">Criar conta</button>
       <UserForm :data="true" :billing="true" v-else key="form">
-        <button class="btn" @click.prevent="criarUsuario">Criar usuário</button>
+        <button class="btn" @click.prevent="createUser">Criar usuário</button>
       </UserForm>
     </transition-group>
   </section>
@@ -12,6 +12,7 @@
 
 <script>
 import UserForm from "@/components/user/UserForm.vue";
+import { api } from "@/modules/services.js";
 
 export default {
   name: "CreateUser",
@@ -20,10 +21,16 @@ export default {
   },
   data() {
     return {
-      criar: false
+      create: false
     };
   },
-  methods: {}
+  methods: {
+    createUser() {
+      api.axiosPost("usuario", this.$store.state.user).then(response => {
+        console.log(response);
+      });
+    }
+  }
 };
 </script>
 

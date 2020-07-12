@@ -3,14 +3,14 @@
     <header class="header">
       <h2 class="title">Billing Address</h2>
     </header>
-    <div class="field" :class="verifyPostalcode">
-      <label class="field__label" for="billing-postalcode">Postalcode</label>
+    <div class="field" :class="verifyPostcode">
+      <label class="field__label" for="billing-postcode">Postcode</label>
       <input
         class="field__input"
         type="text"
         name="postalcode"
-        id="billing-postalcode"
-        v-model="postalcode"
+        id="billing-postcode"
+        v-model="postcode"
       />
     </div>
     <div class="field" :class="verifyAddress">
@@ -52,7 +52,7 @@ export default {
   computed: {
     ...mapFields({
       fields: [
-        "postalcode",
+        "postcode",
         "address",
         "number",
         "neighborhood",
@@ -62,10 +62,10 @@ export default {
       base: ["user", "billing"],
       mutation: "UPDATE_USER"
     }),
-    verifyPostalcode() {
+    verifyPostcode() {
       return {
-        filled: this.$store.state.user.billing.postalcode
-          ? this.$store.state.user.billing.postalcode.length
+        filled: this.$store.state.user.billing.postcode
+          ? this.$store.state.user.billing.postcode.length
           : false
       };
     },
@@ -86,14 +86,14 @@ export default {
     verifyNeighborhood() {
       return {
         filled: this.$store.state.user.billing.neighborhood
-          ? this.$store.state.user.billing.billing.neighborhood.length
+          ? this.$store.state.user.billing.neighborhood.length
           : false
       };
     },
     verifyCity() {
       return {
         filled: this.$store.state.user.billing.city
-          ? this.$store.state.user.city.billing.length
+          ? this.$store.state.user.billing.city.length
           : false
       };
     },

@@ -4,18 +4,26 @@
       <h1 class="title">Endereços</h1>
     </header>
     <UserForm :billing="true" :shipping="true">
-      <button class="btn">Atualizar dados</button>
+      <button @click.prevent="attUserAddress" class="btn">Atualizar endereços</button>
     </UserForm>
   </section>
 </template>
 
 <script>
 import UserForm from "@/components/user/UserForm";
+import { api } from "@/modules/services.js";
 
 export default {
   name: "UserAddress",
   components: {
     UserForm
+  },
+  methods: {
+    attUserAddress() {
+      api.axiosPut("usuario", this.$store.state.user).then(response => {
+        console.log(response);
+      });
+    }
   }
 };
 </script>

@@ -8,6 +8,7 @@ import Userdata from '../views/user/Userdata.vue'
 import UserAddress from '../views/user/UserAddress.vue'
 import UserOrders from '../views/user/UserOrders.vue'
 import Login from '../views/Login.vue'
+import Cart from "../views/checkout/Cart.vue"
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,9 @@ const routes = [
   {
     path: '/user',
     component: User,
+    meta: {
+      logged: true
+    },
     children: [
       {
         path: "",
@@ -63,6 +67,11 @@ const routes = [
       }
     ]
   },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart,
+  }
   // {
   //   path: '/about',
   //   name: 'About',
@@ -79,6 +88,20 @@ const router = new VueRouter({
   routes,
   scrollBehavior() {
     return window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.logged)) {
+    if (!window.localStorage.token) {
+      next({
+        name: "Login"
+      })
+    } else {
+      next();
+    }
+  } else {
+    next();
   }
 })
 

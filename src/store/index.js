@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { addItemToCart, removeItemFromCart } from "@/modules/helpers.js";
 import { api } from '@/modules/services';
+import { LocalStorage } from "@/modules/localStorageHandler.js";
 
 Vue.use(Vuex)
 
@@ -15,14 +16,8 @@ export default new Vuex.Store({
       name: "",
       email: "",
       password: "",
-      postalcode: "",
-      address: "",
-      number: "",
-      neighborhood: "",
-      city: "",
-      state: "",
       billing: {
-        postalcode: "",
+        postcode: "",
         address: "",
         number: "",
         neighborhood: "",
@@ -30,7 +25,7 @@ export default new Vuex.Store({
         state: "",
       },
       shipping: {
-        postalcode: "",
+        postcode: "",
         address: "",
         number: "",
         neighborhood: "",
@@ -41,10 +36,13 @@ export default new Vuex.Store({
   },
   mutations: {
     ADD_ITEM_TO_CART(state, payload) {
-      state.cart = addItemToCart(state.cart, payload);
+      state.cart = payload;
     },
     REMOVE_ITEM_FROM_CART(state, payload) {
-      state.cart = removeItemFromCart(state.cart, payload);
+      state.cart = payload;
+    },
+    UPDATE_CART(state, payload) {
+      state.cart = payload;
     },
     UPDATE_LOGIN(state, payload) {
       state.logged = payload;
@@ -54,31 +52,49 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getUser(context) {
+    getUser({ commit }) {
       return api.axiosGet("usuario").then(response => {
-        context.commit("UPDATE_USER", response.data);
-        context.commit("UPDATE_LOGIN", true);
+        commit("UPDATE_USER", response.data);
+        commit("UPDATE_LOGIN", true);
       })
     },
-    validateUser(context) {
-      api.validateToken()
-        .then(() => {
-          context.dispatch("getUser");
-        }).catch(() => {
-          window.localStorage.removeItem("token");
-        })
+    validateUser({ dispatch }) {
+      if (LocalStorage.exists("token"))
+        api.validateToken()
+          .then(() => {
+            dispatch("getUser");
+          }).catch(() => {
+            LocalStorage.remove("token");
+          })
     },
     login(context, payload) {
       return api.login({
         username: payload.email,
         password: payload.password
       }).then(response => {
-        window.localStorage.token = `Bearer ${response.data.token}`;
+        LocalStorage.add("token", `Bearer ${response.data.token}`);
       })
     },
-    logout(context) {
-      context.commit("UPDATE_LOGIN", false);
-      window.localStorage.removeItem("token");
+    logout({ commit }) {
+      commit("UPDATE_LOGIN", false);
+      LocalStorage.remove("token");
+    },
+    addItemToCart({ commit, dispatch, state }, value) {
+      commit("ADD_ITEM_TO_CART", addItemToCart(state.cart, value));
+      dispatch("attCartInLocalStorage");
+    },
+    removeItemFromCart({ commit, dispatch, state }, value) {
+      commit("REMOVE_ITEM_FROM_CART", removeItemFromCart(state.cart, value));
+      dispatch("attCartInLocalStorage");
+    },
+    attCartInLocalStorage({ state }) {
+      LocalStorage.add("cart", state.cart);
+    },
+    verifyExistingCart({ commit }) {
+      if (LocalStorage.exists("cart")) {
+        const cart = LocalStorage.get("cart");
+        commit("UPDATE_CART", cart);
+      }
     }
   },
   modules: {

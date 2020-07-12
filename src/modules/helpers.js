@@ -9,17 +9,19 @@ export function serialize(obj) {
 
 export function mapFields(options) {
   const object = {};
+  const firstBase = options.base[0];
+  const secondBase = options.base[1];
   for (let x = 0; x < options.fields.length; x++) {
     const field = [options.fields[x]];
     object[field] = (options.base.length > 1) ? {
       get() {
-        const firstBase = options.base[0];
-        const secondBase = options.base[1];
         return this.$store.state[firstBase][secondBase][field];
       },
       set(value) {
-        const secondBase = options.base[1];
-        this.$store.commit(options.mutation, { [secondBase]: { [field]: value } });
+        const secondBaseData = Object.assign(this.$store.state[firstBase][secondBase], {
+          [field]: value
+        });
+        this.$store.commit(options.mutation, { [secondBase]: secondBaseData });
       }
     }
       :
@@ -50,30 +52,57 @@ export function removeHTMLElements(text) {
   if (text) return text.replace(/(<[\w|/]+>)+/g, '');
 }
 
+function isNumber(value) {
+  return typeof value === "number" && isFinite(value);
+}
+
+function isObject(value) {
+  return value && typeof value === 'object' && value.constructor === Object;
+}
+
 function hasOnCart(cart, id) {
   return cart.findIndex(element => element.id === id)
 }
 
 export function addItemToCart(cart, item) {
-  const { id } = item;
-  const indexOfItemOnCart = hasOnCart(cart, id);
+  let id = null;
 
-  if (indexOfItemOnCart >= 0) {
-    cart[indexOfItemOnCart].qtyInCart += 1;
-  } else {
-    const newItem = {
-      id: id,
-      qtyInCart: 1,
-      item: item
+  if (isNumber(item)) id = item;
+
+  if (isObject(item)) id = item.id;
+
+  if (id) {
+    const indexOfItemOnCart = hasOnCart(cart, id);
+
+    if (indexOfItemOnCart >= 0) {
+      cart[indexOfItemOnCart].qtyInCart += 1;
+    } else {
+      const newItem = {
+        id: id,
+        qtyInCart: 1,
+        item: item
+      }
+      cart.push(newItem);
     }
-    cart.push(newItem);
   }
 
   return cart;
 }
 
-export function removeItemFromCart(cart, id) {
-  const indexOfItemOnCart = hasOnCart(cart, id);
-  cart.splice(indexOfItemOnCart, 1);
+export function removeItemFromCart(cart, item) {
+  let id = null;
+
+  if (isNumber(item)) id = item;
+
+  if (isObject(item)) id = item.id;
+
+  if (id) {
+    const indexOfItemOnCart = hasOnCart(cart, id);
+
+    cart[indexOfItemOnCart].qtyInCart -= 1;
+
+    if (cart[indexOfItemOnCart].qtyInCart <= 0) cart.splice(indexOfItemOnCart, 1);
+  }
+
   return cart;
 }
