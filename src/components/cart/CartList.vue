@@ -1,11 +1,15 @@
 <template>
-  <section class="cart">
+  <section class="cart_list">
     <header class="title">
       <h1 class="text">Carrinho</h1>
     </header>
     <ul class="list">
       <li class="item" v-for="{ id, item, qtyInCart } in cart" :key="id">
-        <span class="name">{{item.name}}</span>
+        <span class="image">
+          <img v-if="item.image" :src="item.image.src" alt="item.name" />
+          <img v-if="item.images" :src="item.images[0].src" alt="item.name" />
+        </span>
+        <span class="description">{{item.name}}</span>
         <span class="quantity">
           <button class="minus" :value="id" @click.prevent="removeItem">-</button>
           <input class="valor" :value="qtyInCart" />
@@ -22,6 +26,7 @@ export default {
   name: "CartList",
   computed: {
     cart() {
+      console.log(this.$store.state.cart);
       return this.$store.state.cart;
     }
   },
@@ -39,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.cart {
+.cart_list {
   border-radius: 4px;
   background: $disabled_color;
   padding: 15px;
@@ -61,11 +66,13 @@ export default {
 
     .item {
       margin-bottom: 10px;
-      display: flex;
-      align-content: center;
+      display: grid;
+      grid-template-columns: 50px 1fr 100px 100px;
+      gap: 15px;
+      align-items: center;
       justify-content: space-between;
 
-      .name,
+      .description,
       .total_price {
         @include font;
         font-size: 1.2rem;
@@ -74,13 +81,14 @@ export default {
 
       .quantity {
         display: flex;
-        grid-template-columns: 1fr 35px 50px;
+        align-items: center;
 
         .minus,
         .plus {
           @include button;
           padding: 0;
           width: 15px;
+          height: 20px;
           margin: 0 5px;
         }
 

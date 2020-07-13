@@ -11,6 +11,7 @@ export function mapFields(options) {
   const object = {};
   const firstBase = options.base[0];
   const secondBase = options.base[1];
+
   for (let x = 0; x < options.fields.length; x++) {
     const field = [options.fields[x]];
     object[field] = (options.base.length > 1) ? {
@@ -18,9 +19,11 @@ export function mapFields(options) {
         return this.$store.state[firstBase][secondBase][field];
       },
       set(value) {
-        const secondBaseData = Object.assign(this.$store.state[firstBase][secondBase], {
-          [field]: value
-        });
+        const secondBaseData = Object.assign(
+          this.$store.state[firstBase][secondBase],
+          { [field]: value }
+        );
+
         this.$store.commit(options.mutation, { [secondBase]: secondBaseData });
       }
     }
@@ -35,6 +38,7 @@ export function mapFields(options) {
         }
       }
   }
+
   return object;
 }
 
@@ -50,59 +54,4 @@ export function compareTwoArrays(arrayOne, arrayTwo) {
 
 export function removeHTMLElements(text) {
   if (text) return text.replace(/(<[\w|/]+>)+/g, '');
-}
-
-function isNumber(value) {
-  return typeof value === "number" && isFinite(value);
-}
-
-function isObject(value) {
-  return value && typeof value === 'object' && value.constructor === Object;
-}
-
-function hasOnCart(cart, id) {
-  return cart.findIndex(element => element.id === id)
-}
-
-export function addItemToCart(cart, item) {
-  let id = null;
-
-  if (isNumber(item)) id = item;
-
-  if (isObject(item)) id = item.id;
-
-  if (id) {
-    const indexOfItemOnCart = hasOnCart(cart, id);
-
-    if (indexOfItemOnCart >= 0) {
-      cart[indexOfItemOnCart].qtyInCart += 1;
-    } else {
-      const newItem = {
-        id: id,
-        qtyInCart: 1,
-        item: item
-      }
-      cart.push(newItem);
-    }
-  }
-
-  return cart;
-}
-
-export function removeItemFromCart(cart, item) {
-  let id = null;
-
-  if (isNumber(item)) id = item;
-
-  if (isObject(item)) id = item.id;
-
-  if (id) {
-    const indexOfItemOnCart = hasOnCart(cart, id);
-
-    cart[indexOfItemOnCart].qtyInCart -= 1;
-
-    if (cart[indexOfItemOnCart].qtyInCart <= 0) cart.splice(indexOfItemOnCart, 1);
-  }
-
-  return cart;
 }
